@@ -116,6 +116,8 @@ Clone repository
 
 ```bash
 git clone https://github.com/DRPatel75/End-to-End-Predictive-Modeling-Pipeline-with-Streamlit-Deployment.git
+```
+
 Step 2
 
 Install dependencies
