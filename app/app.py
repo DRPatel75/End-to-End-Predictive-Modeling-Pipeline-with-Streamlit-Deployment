@@ -9,6 +9,11 @@ model = joblib.load(r"D:\Projects\ML PROJECT 1\models\best_model.joblib")
 
 st.title("Customer Churn Prediction")
 
+st.write("Fill customer details to predict churn probability.")
+
+st.sidebar.title("Customer Churn Prediction")
+st.sidebar.write("ML Powered Prediction System")
+
 # User Inputs
 
 gender = st.selectbox("Gender", ["Male", "Female"])
@@ -95,38 +100,41 @@ TotalCharges = st.number_input(
 
 # Prediction
 
+st.divider()
+
 if st.button("Predict"):
 
-    data = pd.DataFrame({
-        "gender": [gender],
-        "SeniorCitizen": [SeniorCitizen],
-        "Partner": [Partner],
-        "Dependents": [Dependents],
-        "tenure": [tenure],
-        "PhoneService": [PhoneService],
-        "MultipleLines": [MultipleLines],
-        "InternetService": [InternetService],
-        "OnlineSecurity": [OnlineSecurity],
-        "OnlineBackup": [OnlineBackup],
-        "DeviceProtection": [DeviceProtection],
-        "TechSupport": [TechSupport],
-        "StreamingTV": [StreamingTV],
-        "StreamingMovies": [StreamingMovies],
-        "Contract": [Contract],
-        "PaperlessBilling": [PaperlessBilling],
-        "PaymentMethod": [PaymentMethod],
-        "MonthlyCharges": [MonthlyCharges],
-        "TotalCharges": [TotalCharges]
-    })
+    with st.spinner("Predicting..."):
+        data = pd.DataFrame({
+            "gender": [gender],
+            "SeniorCitizen": [SeniorCitizen],
+            "Partner": [Partner],
+            "Dependents": [Dependents],
+            "tenure": [tenure],
+            "PhoneService": [PhoneService],
+            "MultipleLines": [MultipleLines],
+            "InternetService": [InternetService],
+            "OnlineSecurity": [OnlineSecurity],
+            "OnlineBackup": [OnlineBackup],
+            "DeviceProtection": [DeviceProtection],
+            "TechSupport": [TechSupport],
+            "StreamingTV": [StreamingTV],
+            "StreamingMovies": [StreamingMovies],
+            "Contract": [Contract],
+            "PaperlessBilling": [PaperlessBilling],
+            "PaymentMethod": [PaymentMethod],
+            "MonthlyCharges": [MonthlyCharges],
+            "TotalCharges": [TotalCharges]
+        })
 
-    prediction = model.predict(data)
+        prediction = model.predict(data)
 
-    # Prediction Result
+        # Prediction Result
 
-    if prediction[0] == "Yes":
-        st.error("Customer is likely to Churn")
-    else:
-        st.success("Customer is likely to Stay")
+        if prediction[0] == "Yes":
+            st.error("Customer is likely to Churn")
+        else:
+         st.success("Customer is likely to Stay")
 
     # SHAP Explainability
 
