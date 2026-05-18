@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import shap
+import matplotlib.pyplot as plt
 
 # Load model
 model = joblib.load(r"D:\Projects\ML PROJECT 1\models\best_model.joblib")
@@ -119,7 +121,31 @@ if st.button("Predict"):
 
     prediction = model.predict(data)
 
+    # Prediction Result
+
     if prediction[0] == "Yes":
         st.error("Customer is likely to Churn")
     else:
         st.success("Customer is likely to Stay")
+
+    # SHAP Explainability
+
+    try:
+
+        transformed_data = model.named_steps["preprocessor"].transform(data)
+
+        explainer = shap.Explainer(model.named_steps["model"])
+
+        shap_values = explainer(transformed_data)
+
+        st.subheader("SHAP Explanation")
+
+        fig, ax = plt.subplots()
+
+        shap.plots.waterfall(shap_values[0], show=False)
+
+        st.pyplot(fig)
+
+    except Exception as e:
+
+        st.warning(f"SHAP visualization could not load: {e}")
