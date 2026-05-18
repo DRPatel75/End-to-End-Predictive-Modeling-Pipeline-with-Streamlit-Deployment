@@ -127,14 +127,18 @@ if st.button("Predict"):
             "TotalCharges": [TotalCharges]
         })
 
-        prediction = model.predict(data)
+        try:
 
-        # Prediction Result
+            prediction = model.predict(data)
 
-        if prediction[0] == "Yes":
-            st.error("Customer is likely to Churn")
-        else:
-         st.success("Customer is likely to Stay")
+            if prediction[0] == "Yes":
+                st.error("Customer is likely to Churn")
+            else:
+                st.success("Customer is likely to Stay")
+
+        except Exception as e:
+
+            st.error(f"Error occurred: {e}")
 
     # SHAP Explainability
 
