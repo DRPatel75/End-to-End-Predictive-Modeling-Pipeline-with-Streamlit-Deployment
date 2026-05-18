@@ -20,6 +20,6 @@ if st.button("Predict"):
         "MonthlyCharges": [MonthlyCharges]
     })
 
-    prediction = model.predict(date)
+    prediction = model.predict(data)
 
     st.sucess(f"Prediction: {prediction[0]}")
