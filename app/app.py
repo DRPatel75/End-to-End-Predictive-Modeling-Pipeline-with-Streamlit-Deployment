@@ -132,19 +132,27 @@ if st.button("Predict"):
 
     try:
 
+        st.subheader("SHAP Feature Importance")
+
         transformed_data = model.named_steps["preprocessor"].transform(data)
 
-        explainer = shap.Explainer(model.named_steps["model"])
+        explainer = shap.LinearExplainer(
+         model.named_steps["model"],
+            transformed_data
+        )
 
-        shap_values = explainer(transformed_data)
+        shap_values = explainer.shap_values(transformed_data)
 
-        st.subheader("SHAP Explanation")
+        feature_names = model.named_steps[
+            "preprocessor"
+        ].get_feature_names_out()
 
-        fig, ax = plt.subplots()
+        shap_df = pd.DataFrame({
+            "Feature": feature_names,
+            "SHAP Value": shap_values[0]
+        })
 
-        shap.plots.waterfall(shap_values[0], show=False)
-
-        st.pyplot(fig)
+        st.dataframe(shap_df)
 
     except Exception as e:
 
