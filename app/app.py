@@ -5,7 +5,7 @@ import shap
 import matplotlib.pyplot as plt
 
 # Load model
-model = joblib.load(r"D:\Projects\ML PROJECT 1\models\best_model.joblib")
+model = joblib.load("models/best_model.joblib")
 
 st.title("Customer Churn Prediction")
 
